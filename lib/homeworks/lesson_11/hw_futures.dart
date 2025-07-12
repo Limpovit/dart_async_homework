@@ -1,7 +1,6 @@
 import 'dart:io';
 
 void main(List<String> args) async {
-
   // Task 1: Асинхронне отримання імені
   stdout.write("Мене звати ${await fetchName()}");
 
@@ -10,19 +9,31 @@ void main(List<String> args) async {
 
   // Task 3: Послідовне виконання Future
 
-// Виконайте методи fetchName() та fetchAge() послідовно.
-// Виміряйте та виведіть час виконання обох методів. 
-// Порада. Можете використати для виконання другого пункту клас https://api.flutter.dev/flutter/dart-core/Stopwatch-class.html 
+  // Виконайте методи fetchName() та fetchAge() послідовно.
+  // Виміряйте та виведіть час виконання обох методів.
+  // Порада. Можете використати для виконання другого пункту клас https://api.flutter.dev/flutter/dart-core/Stopwatch-class.html
 
-final stopwatch = Stopwatch();
-stopwatch.start();
-await fetchName();
-await fetchAge();
-stopwatch.stop();
-print("Методи виконувались ${stopwatch.elapsedMilliseconds} мілісекунд ");
+  final stopwatch = Stopwatch();
+  stopwatch.start();
+  await fetchName();
+  await fetchAge();
+  stopwatch.stop();
+  print("Методи виконувались ${stopwatch.elapsedMilliseconds} мілісекунд ");
 
+  // Task 4: Паралельне виконання Future (Future.wait)
 
+  // Виконайте методи fetchName() та fetchAge() паралельно за допомогою Future.wait.
+  // Виміряйте та виведіть час виконання.
 
+  stopwatch.reset();
+  stopwatch.start();
+  await Future.wait([fetchName(), fetchAge()]);
+  stopwatch.stop();
+  print(
+    "Методи виконувались паралельно ${stopwatch.elapsedMilliseconds} мілісекунд ",
+  );
+
+  
 }
 
 // Task 1: Асинхронне отримання імені
@@ -46,14 +57,11 @@ Future<String> fetchName() async {
 // Реалізуйте логіку, щоб слово "рік" змінювалося відповідно до значення віку (наприклад: 21 рік, 22 роки, 25 років).
 
 Future<String> fetchAge() async {
-
-  return await Future.delayed(const Duration(milliseconds: 1500), () => "1");
-
+  return await Future.delayed(const Duration(milliseconds: 1500), () => "27");
 }
 
 String pluralizeYears(String ageStr) {
-
- if (ageStr.isEmpty) return "Невірне значення";
+  if (ageStr.isEmpty) return "Невірне значення";
 
   int age = int.tryParse(ageStr) ?? -1;
   if (age < 0) return "Невірне значення";
@@ -63,7 +71,10 @@ String pluralizeYears(String ageStr) {
       ? ageStr.substring(ageStr.length - 2)
       : lastChar;
 
-  if (lastTwo == '11' || lastTwo == '12' || lastTwo == '13' || lastTwo == '14') {
+  if (lastTwo == '11' ||
+      lastTwo == '12' ||
+      lastTwo == '13' ||
+      lastTwo == '14') {
     return "$ageStr років";
   }
 
@@ -78,5 +89,3 @@ String pluralizeYears(String ageStr) {
       return "$ageStr років";
   }
 }
-
-
