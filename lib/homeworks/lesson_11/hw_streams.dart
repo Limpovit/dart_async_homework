@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
@@ -30,7 +31,7 @@ void main(List<String> args) async {
   // Обмежте відлік до 10 чисел за допомогою методу take.
   // Виведіть кожне число у консоль у форматі: "1...", "2...", "3...", ... "10...".
 
-  final Stream streamPeriodic = Stream.periodic(const Duration(seconds: 1), (
+  final Stream streamPeriodic = Stream.periodic(const Duration(milliseconds: 1), (
     timer,
   ) {
     return timer + 1;
@@ -40,5 +41,30 @@ void main(List<String> args) async {
     stdout.write('$value...');
   }
 
+  await streamController();
+}
+
+Future<void> streamController() async {
+  //   Task 8: Робота з StreamController
   
+  // Створіть StreamController<String>.
+  // Додайте до цього контролера кілька довільних рядкових значень вручну (наприклад, "Hello", "World", "Dart").
+  // Прослухайте цей стрім (через метод listen) і виведіть всі значення у консоль.
+  // Закрийте контролер після додавання всіх значень.
+  
+  stdout.write('\n');
+  
+  final controller = StreamController<String>();
+
+    controller.stream.listen((event) {
+    stdout.write('$event ');
+  });
+  
+  controller.add('Hello');
+  controller.add('World');
+  controller.add('Dart');
+  
+
+  
+  await controller.close();
 }
