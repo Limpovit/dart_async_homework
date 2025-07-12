@@ -18,7 +18,9 @@ void main(List<String> args) async {
   await fetchName();
   await fetchAge();
   stopwatch.stop();
-  print("Методи виконувались ${stopwatch.elapsedMilliseconds} мілісекунд ");
+  print(
+    "Методи виконувались послідовно ${stopwatch.elapsedMilliseconds} мілісекунди",
+  );
 
   // Task 4: Паралельне виконання Future (Future.wait)
 
@@ -30,10 +32,12 @@ void main(List<String> args) async {
   await Future.wait([fetchName(), fetchAge()]);
   stopwatch.stop();
   print(
-    "Методи виконувались паралельно ${stopwatch.elapsedMilliseconds} мілісекунд ",
+    "Методи виконувались паралельно ${stopwatch.elapsedMilliseconds} мілісекунди",
   );
 
-  
+  // Task 5: Зворотний відлік з затримкою
+
+  print(await delayedCountdown(4));
 }
 
 // Task 1: Асинхронне отримання імені
@@ -88,4 +92,21 @@ String pluralizeYears(String ageStr) {
     default:
       return "$ageStr років";
   }
+}
+
+// Task 5: Зворотний відлік з затримкою
+
+// Напишіть функцію Future<String> delayedCountdown(int seconds), яка приймає кількість секунд.
+// Ця функція повинна щосекунди виводити у консоль відлік (наприклад: "3...", "2...", "1...").
+// В кінці відліку метод має повертати рядок "Старт!".
+
+Future<String> delayedCountdown(int seconds) async {
+  for (int i = seconds; i > 0; i--) {
+    await Future.delayed(const Duration(seconds: 1), () {
+      print("$i...");
+    });
+  }
+  await Future.delayed(const Duration(seconds: 1));
+
+  return ("Старт!");
 }
