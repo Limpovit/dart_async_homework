@@ -102,11 +102,8 @@ String pluralizeYears(String ageStr) {
 
 Future<String> delayedCountdown(int seconds) async {
   for (int i = seconds; i > 0; i--) {
-    await Future.delayed(const Duration(seconds: 1), () {
-      print("$i...");
-    });
+    print("$i...");
+    await Future.delayed(const Duration(seconds: 1));
   }
-  await Future.delayed(const Duration(seconds: 1));
-
   return ("Старт!");
 }
