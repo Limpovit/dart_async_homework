@@ -6,7 +6,22 @@ void main(List<String> args) async {
   stdout.write("Мене звати ${await fetchName()}");
 
   // Task 2: Асинхронне отримання віку
-  stdout.write("\nМені ${pluralizeYears(await fetchAge())}");
+  stdout.write("\nМені ${pluralizeYears(await fetchAge())}\n");
+
+  // Task 3: Послідовне виконання Future
+
+// Виконайте методи fetchName() та fetchAge() послідовно.
+// Виміряйте та виведіть час виконання обох методів. 
+// Порада. Можете використати для виконання другого пункту клас https://api.flutter.dev/flutter/dart-core/Stopwatch-class.html 
+
+final stopwatch = Stopwatch();
+stopwatch.start();
+await fetchName();
+await fetchAge();
+stopwatch.stop();
+print("Методи виконувались ${stopwatch.elapsedMilliseconds} мілісекунд ");
+
+
 
 }
 
@@ -63,3 +78,5 @@ String pluralizeYears(String ageStr) {
       return "$ageStr років";
   }
 }
+
+
